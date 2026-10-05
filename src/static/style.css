@@ -95,7 +95,7 @@ margin-top:25px;
 font-size:11px;
 color:var(--muted)}
 .hero-meta span+span:before{
-content:"Ã‚Â·";
+content:"\00b7";
 margin-right:22px}
 .hero-number{
 position:absolute;

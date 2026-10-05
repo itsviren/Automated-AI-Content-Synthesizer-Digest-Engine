@@ -1,5 +1,9 @@
 # Free deployment
 
+Current live dashboard: https://content-digest-engine.onrender.com/
+
+The setup below is already configured for this repository. Consult STATUS.md before creating resources, to avoid duplicating the existing Supabase project, Render service, or cron-job.org job.
+
 ## 1. Supabase
 
 Create a Free project. Run `supabase/schema.sql` in the SQL editor. Keep the project URL and service-role key in server secrets. Do not expose the key in frontend JavaScript or commit it. The schema enables row-level security; the dashboard talks to Supabase server-side.

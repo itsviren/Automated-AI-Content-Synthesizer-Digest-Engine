@@ -8,7 +8,7 @@ RSS/Atom ingestion; bounded article extraction; URL and exact-content deduplicat
 
 21 offline tests pass. They cover summaries and malformed AI responses, free-quota fallback, normalization, private-network redirects, extraction, deduplication, transactional rollback, expired run leases, retries, API bounds, search, RSS, and HTML escaping. A live no-key pipeline run collected 15 articles from three configured feeds and produced a persisted local digest and exports. A second run reused the existing digest without reprocessing. Dashboard preview uses that real local data; search and mobile layout were checked in the browser. Test output includes a non-failing upstream Starlette TestClient deprecation warning.
 
-## GitHub deployment preparation — October 6, 2026
+## Hosted deployment — October 6, 2026
 
 The initial implementation (29239d0) has been pushed to the repository's `main` branch. The GitHub-hosted Tests workflow completed successfully:
 
@@ -16,11 +16,19 @@ https://github.com/itsviren/Automated-AI-Content-Synthesizer-Digest-Engine/actio
 
 Render and Supabase account access is available. A Free Supabase project named `content-digest-engine` has been created (project reference `ufkkzrkpobmcaaxentyp`). The repository schema ran successfully. A live SQL check confirmed row-level security is enabled and anonymous SELECT access is disabled on `articles`, `digests`, and `runs`.
 
-`SUPABASE_URL` is configured in GitHub Actions. The Render creation form is prepared for the Free plan in Singapore with the project URL, Python 3.12.8, the locked build dependencies, and `/health`. The web service has not been launched yet. Storing the service-role key in Render and GitHub is pending explicit credential-transfer approval. cron-job.org still needs account sign-in.
+The approved service-role key is configured in Render environment variables and GitHub Actions Secrets, alongside `SUPABASE_URL`. No credentials are committed. An ignored local `.env` also supports development against this project.
 
-## Not yet verified with hosted accounts
+The Render Free service in Singapore is live at https://content-digest-engine.onrender.com/ (service ID `srv-db1vcb8m7kps73cvbpd0`). It uses Python 3.12.8, locked dependencies, and `/health`. The first GitHub Actions digest run completed successfully and stored 15 articles in Supabase:
 
-Supabase REST/RPC integration; Gemini model calls; Render deployment; GitHub scheduled digest workflow execution; cron-job.org configuration. These require account configuration and secrets. Local tests simulate AI and Supabase HTTP responses. Supabase schema execution and table security are verified live. The GitHub test workflow itself is verified as passing.
+https://github.com/itsviren/Automated-AI-Content-Synthesizer-Digest-Engine/actions/runs/37361563946
+
+Live checks returned HTTP 200 for the dashboard, health endpoint, digest API, RSS feed, Markdown download, and search. A real Supabase-backed rerun reused the existing digest without reprocessing or generating a duplicate. Daily execution is configured for 08:17 IST (02:47 UTC); the scheduled trigger itself will first be exercised at its next scheduled time.
+
+cron-job.org job `8585914` is enabled and points to the Render `/health` URL every ten minutes. Failure notifications are configured after three consecutive failures, with recovery and automatic-disable notifications enabled. The existing unrelated cron job was left untouched.
+
+## Remaining integration work
+
+Gemini model calls remain unconfigured and unverified. Current summaries explicitly use the extractive fallback, requiring no AI spending. Supabase schema, REST/RPC, Render deployment, manually dispatched GitHub digest execution, and the GitHub test workflow are verified live. Exact future schedule execution and continuous availability are not guaranteed by free providers.
 
 ## Later work
 

@@ -2,6 +2,8 @@
 
 A daily digest service that gathers RSS articles, removes duplicates, creates source-linked summaries, and publishes a searchable web archive.
 
+**Live dashboard:** https://content-digest-engine.onrender.com/
+
 ## Agreed deployment
 
 - GitHub: source, tests, and scheduled Python execution through Actions.
@@ -32,6 +34,6 @@ Open http://localhost:8000. Local development uses SQLite; production must use S
 python -m pytest
 ```
 
-No deployment is performed by creating these files. Provider accounts and secrets must be configured before hosted services can run.
+The hosted deployment uses Render Free and Supabase Free. GitHub Actions generates the executive digest daily at 08:17 IST (02:47 UTC); cron-job.org pings `/health` every ten minutes. Gemini is optional and is not configured in the current deployment, which uses source excerpts. See docs/STATUS.md for live verification evidence.
 
 `requirements.txt` describes allowed dependency ranges; `requirements.lock.txt` captures the versions tested for this release. Use the lock file for reproducible installs and review it when upgrading dependencies.
