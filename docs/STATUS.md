@@ -14,11 +14,13 @@ The initial implementation (29239d0) has been pushed to the repository's `main` 
 
 https://github.com/itsviren/Automated-AI-Content-Synthesizer-Digest-Engine/actions/runs/37359470835
 
-Render and Supabase deployment require account sign-in. No provider credentials are configured in the local environment. No Render service or Supabase project has been provisioned by this development session yet.
+Render and Supabase account access is available. A Free Supabase project named `content-digest-engine` has been created (project reference `ufkkzrkpobmcaaxentyp`). The repository schema ran successfully. A live SQL check confirmed row-level security is enabled and anonymous SELECT access is disabled on `articles`, `digests`, and `runs`.
+
+`SUPABASE_URL` is configured in GitHub Actions. The Render creation form is prepared for the Free plan in Singapore with the project URL, Python 3.12.8, the locked build dependencies, and `/health`. The web service has not been launched yet. Storing the service-role key in Render and GitHub is pending explicit credential-transfer approval. cron-job.org still needs account sign-in.
 
 ## Not yet verified with hosted accounts
 
-Supabase schema execution and real REST/RPC integration; Gemini model calls; Render deployment; GitHub scheduled digest workflow execution; cron-job.org configuration. These require account configuration and secrets. Local tests simulate AI and Supabase HTTP responses. The GitHub test workflow itself is now verified as passing.
+Supabase REST/RPC integration; Gemini model calls; Render deployment; GitHub scheduled digest workflow execution; cron-job.org configuration. These require account configuration and secrets. Local tests simulate AI and Supabase HTTP responses. Supabase schema execution and table security are verified live. The GitHub test workflow itself is verified as passing.
 
 ## Later work
 
