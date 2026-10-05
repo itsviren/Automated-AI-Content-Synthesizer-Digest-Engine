@@ -17,6 +17,8 @@ Storage completion writes articles, digest, and run status in one transaction. I
 
 ## Limits and maintenance
 
+Render free instance hours are shared across this workspace. The verified workspace has two services and a 750-hour monthly allowance. Keeping both free services awake continuously can exhaust it before month-end. The daily GitHub pipeline can still run independently, but the Render dashboard may be suspended when its shared hours are exhausted. No card is on file as of October 6, 2026. Review usage before assuming keep-alive jobs provide continuous availability.
+
 The initial limits are 20 articles/run, 5 entries/feed, and 20 AI requests/run including retries. A quota error switches remaining items to extractive summaries. No paid fallback is configured. Summaries are capped at 1000 characters; article excerpts stored in the database are capped at 1000 characters.
 
 The web archive displays the latest 30 editions. The JSON API supports up to 100 per request. Long-term pagination, automated database retention, and backups are not implemented in this initial release. Monitor capacity and export/prune historical data before Supabase's free storage is exhausted.

@@ -24,7 +24,9 @@ https://github.com/itsviren/Automated-AI-Content-Synthesizer-Digest-Engine/actio
 
 Live checks returned HTTP 200 for the dashboard, health endpoint, digest API, RSS feed, Markdown download, and search. A real Supabase-backed rerun reused the existing digest without reprocessing or generating a duplicate. Daily execution is configured for 08:17 IST (02:47 UTC); the scheduled trigger itself will first be exercised at its next scheduled time.
 
-cron-job.org job `8585914` is enabled and points to the Render `/health` URL every ten minutes. Failure notifications are configured after three consecutive failures, with recovery and automatic-disable notifications enabled. The existing unrelated cron job was left untouched.
+cron-job.org job `8585914` is enabled and points to the Render `/health` URL every ten minutes. Its real test run returned HTTP 200 OK in 312 ms. Failure notifications are configured after three consecutive failures, with recovery and automatic-disable notifications enabled. The existing unrelated cron job was left untouched.
+
+The Render billing page confirms Hobby, two services, no card on file, and 750 shared free instance hours/month (115.02 used at verification). Two continuously awake free services can exhaust the shared allowance; a ten-minute keep-alive does not provide unlimited free uptime. No payment method, paid plan, or paid AI provider was enabled.
 
 ## Remaining integration work
 
