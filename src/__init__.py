@@ -1,0 +1,1 @@
+"""Content digest engine."""

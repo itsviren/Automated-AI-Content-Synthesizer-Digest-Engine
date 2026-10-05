@@ -1,0 +1,12 @@
+{
+  "categories": [
+    {
+      "name": "Artificial Intelligence",
+      "sources": ["https://openai.com/news/rss.xml", "https://research.google/blog/rss/"]
+    },
+    {
+      "name": "Tech & Engineering",
+      "sources": ["https://news.ycombinator.com/rss"]
+    }
+  ]
+}

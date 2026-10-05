@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal — Your daily perspective</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="Signal home"><span class="brand-mark">≋</span> signal<span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation"><a href="/" class="active">Briefings</a><a href="/rss.xml">RSS feed <span>↗</span></a><a href="/docs">API <span>↗</span></a></nav>
+    <span class="edition">THE DAILY PERSPECTIVE</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="small-dot"></span> LESS NOISE. MORE CONTEXT.</div>
+      <h1>A clearer view of<br>what matters<span>.</span></h1>
+      <p>Your sources, distilled into concise briefings.<br>Every insight comes with a path back to the original.</p>
+      <div class="hero-meta"><span>AI &amp; technology</span><span>Source-linked</span><span>Daily perspective</span></div>
+      <div class="hero-number" aria-hidden="true">S/01</div>
+    </section>
+    <section class="metrics" aria-label="Archive statistics">
+      <div><strong>{{ archive_count }}</strong><span>Recent briefings</span></div>
+      <div><strong>{{ total }}</strong><span>Articles in recent archive</span></div>
+      <div><strong>{{ categories | length }}</strong><span>Topics covered</span></div>
+      <div><strong>{{ latest.day if latest else '—' }}</strong><span>Latest matching edition</span></div>
+    </section>
+    <section class="workspace">
+      <aside>
+        <h2>The reading room</h2><p>A little perspective.<br>A lot less scrolling.</p>
+        <form method="get" role="search">
+          <label for="search">Search recent briefings</label>
+          <input id="search" name="q" value="{{ q }}" placeholder="Topics, articles, ideas…" type="search">
+          <label for="profile">Digest profile</label>
+          <select id="profile" name="profile">
+            {% for value, label in [('all','All briefings'),('executive','Executive'),('technical','Technical')] %}
+            <option value="{{ value }}" {% if profile == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Find your perspective <span>→</span></button>
+        </form>
+        <div class="source-note"><span>01 / READING NOTE</span><p>Generated summaries are a starting point. Follow the sources for the full story.</p></div>
+      </aside>
+      <div class="briefings">
+        <div class="section-heading"><h2>{{ 'Search results' if q else 'Latest briefings' }}</h2><span>{{ digests | length }} EDITIONS</span></div>
+        {% for digest in digests %}
+        <section class="digest">
+          <div class="digest-heading"><div><span class="eyebrow">{{ digest.profile }} BRIEFING</span><h3>{{ digest.day }}</h3></div><a class="export" href="/digests/{{ digest.id }}.md">Export .md ↓</a></div>
+          {% if digest.warnings %}<p class="warning">Some sources were unavailable during this run.</p>{% endif %}
+          {% for item in digest['items'] %}
+          <article class="article-card">
+            <div class="article-top"><span class="category">{{ item.category }}</span><span class="method">{{ 'AI summary' if item.method == 'gemini' else 'Source excerpt' }}</span></div>
+            <h4><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></h4>
+            <p>{{ item.summary }}</p>
+            <details><summary>Key takeaways</summary><ul>{% for point in item.takeaways %}<li>{{ point }}</li>{% endfor %}</ul></details>
+            <a class="source-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">Read original source <span>↗</span></a>
+          </article>
+          {% else %}<div class="empty small"><p>No new articles in this edition. Previously processed articles were skipped.</p></div>{% endfor %}
+        </section>
+        {% else %}
+        <div class="empty"><div class="empty-icon">≋</div><h3>{{ 'No matching briefings' if q else 'Your first briefing starts here' }}</h3><p>{{ 'Try a different topic or profile.' if q else 'Your archive is ready. Once the first digest is published, your source-linked reading list will appear here.' }}</p>{% if q or profile != 'all' %}<a href="/">View all briefings →</a>{% endif %}</div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+  <footer><span class="brand">signal<span class="brand-dot">.</span></span><p>Stay informed. Keep your perspective.</p><span>BUILT FOR A MORE INTENTIONAL READ</span></footer>
+</body>
+</html>
